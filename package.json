@@ -1,0 +1,24 @@
+{
+  "name": "kafka-redis-express-server",
+  "version": "0.0.0",
+  "description": "A PoC on integrating kafka message strean with redis.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "generateData": "node src/generator/generator",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KaustuvMukherjee/kafka-redis-express-server.git"
+  },
+  "author": "Kaustuv Mukherjee",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/KaustuvMukherjee/kafka-redis-express-server/issues"
+  },
+  "homepage": "https://github.com/KaustuvMukherjee/kafka-redis-express-server#readme",
+  "dependencies": {
+    "winston": "^3.1.0"
+  }
+}
