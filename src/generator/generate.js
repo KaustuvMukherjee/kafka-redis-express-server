@@ -30,15 +30,17 @@ class Generate {
         }
 
         for(let i = 0; i < noOfRecords; i++) {
-            let record = ''
+            let record = '{'
             let index = (i).pad(size)
             for(let j = 0; j < noOfFields; j++) {
+                let key = `\"key${j}\"`
                 let prefix = prefixLookUp[j%prefixLookUp.length]
-                record += `${prefix}${index}`
+                let value = `\"${prefix}${index}\"`
+                record += `${key}: ${value}`
                 if(j !== noOfFields-1) {
                     record += `,`
                 } else {
-                    record += `\n`
+                    record += '}\n'
                 }
             }
             fs.appendFileSync(outFile, record)
