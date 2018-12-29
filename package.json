@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "generateData": "node src/generator/generator",
+    "generate-data": "node $NODE_DEBUG_OPTION src/file/generators/generateData",
+    "read-data": "node $NODE_DEBUG_OPTION src/file/readers/readData",
+    "generate-read-data": "npm-run-series generate-data read-data",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +21,8 @@
   },
   "homepage": "https://github.com/KaustuvMukherjee/kafka-redis-express-server#readme",
   "dependencies": {
+    "line-reader": "^0.4.0",
+    "npm-run-series": "^1.0.1",
     "randomstring": "^1.1.5",
     "winston": "^3.1.0"
   }

@@ -1,30 +1,31 @@
 /*
- * Class - Generate
+ * Class - GenerateData
  */
 'use strict'
 const fs = require('fs')
 const winston = require('winston')
 const randomstring = require("randomstring")
-const utility = require('../utility/utility')
+const utility = require('../../utility/utility')
 
 let size = 10 // should not be more than  26
 const prefixLookUp = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
                         'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-const srcPath = fs.realpathSync('src')
-
 const fields_with_random_alphabets = true
+const size_of_each_field = 3
+const no_of_fields_per_record = 10
+const no_of_records = 1000
+const dataPath = `${fs.realpathSync('src')}/file/data`
 
-class Generate {
-    static generateData(sizeOfEachField,
+class GenerateData {
+    static generate(sizeOfEachField,
                         noOfFields,
                         noOfRecords) {
         // If data directory does not exists, create it
         try {
-            fs.mkdirSync(`${srcPath}/data`)
+            fs.mkdirSync(dataPath)
         } catch (e) {
             winston.info(`Directory exists !!`)
         }
-        let dataPath = `${srcPath}/data`
         let outFile = `${dataPath}/records`
 
         // If data file exists, delete it
@@ -73,4 +74,7 @@ class Generate {
     }
 }
 
-module.exports = Generate
+
+GenerateData.generate(size_of_each_field <= 26 ? size_of_each_field : 26,
+    no_of_fields_per_record,
+    no_of_records)
