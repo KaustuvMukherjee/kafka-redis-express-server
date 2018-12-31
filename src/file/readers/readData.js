@@ -4,7 +4,7 @@
 'use strict'
 const fs = require('fs')
 const lineReader = require('line-reader')
-const winston = require('winston')
+const logger = require('../../logger/winston')
 const utility = require('../../utility/utility')
 
 let size = 10 // should not be more than  26
@@ -27,7 +27,7 @@ class ReadData {
 let count = 0
 ReadData.read((line) => {
     count += 1
-    console.log(`${count} - ${line}`)
+    logger.info(`${count} - ${line}`)
 })
 
 module.exports = ReadData

@@ -8,6 +8,8 @@
     "generate-data": "node $NODE_DEBUG_OPTION src/file/generators/generateData",
     "read-data": "node $NODE_DEBUG_OPTION src/file/readers/readData",
     "generate-read-data": "npm-run-series generate-data read-data",
+    "server-start": "node $NODE_DEBUG_OPTION src/communication/websocket/server/wsServer",
+    "client-start": "node $NODE_DEBUG_OPTION src/communication/websocket/client/wsClient",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,6 +26,8 @@
     "line-reader": "^0.4.0",
     "npm-run-series": "^1.0.1",
     "randomstring": "^1.1.5",
+    "uuid": "^3.3.2",
+    "websocket": "^1.0.28",
     "winston": "^3.1.0"
   }
 }
