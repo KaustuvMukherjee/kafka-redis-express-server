@@ -3,7 +3,7 @@
  */
 'use strict'
 const fs = require('fs')
-const winston = require('winston')
+const logger = require('../../logger/winston')
 const randomstring = require("randomstring")
 const utility = require('../../utility/utility')
 
@@ -13,7 +13,7 @@ const prefixLookUp = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'
 const fields_with_random_alphabets = true
 const size_of_each_field = 3
 const no_of_fields_per_record = 10
-const no_of_records = 1000
+const no_of_records = 100
 const dataPath = `${fs.realpathSync('src')}/file/data`
 
 class GenerateData {
@@ -24,7 +24,7 @@ class GenerateData {
         try {
             fs.mkdirSync(dataPath)
         } catch (e) {
-            winston.info(`Directory exists !!`)
+            logger.info(`Directory exists !!`)
         }
         let outFile = `${dataPath}/records`
 
@@ -32,7 +32,7 @@ class GenerateData {
         try {
             fs.unlinkSync(outFile)
         } catch (e) {
-            winston.info(`File not found !!`)
+            logger.info(`File not found !!`)
         }
 
         if(fields_with_random_alphabets) {

@@ -10,6 +10,8 @@
     "generate-read-data": "npm-run-series generate-data read-data",
     "server-start": "node $NODE_DEBUG_OPTION src/communication/websocket/server/wsServer",
     "client-start": "node $NODE_DEBUG_OPTION src/communication/websocket/client/wsClient",
+    "redis-start": "node $NODE_DEBUG_OPTION src/storage/redis/redisClient",
+    "producerClient-start": "node $NODE_DEBUG_OPTION src/streaming/kafka/producer/producerClient",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,8 +26,11 @@
   "homepage": "https://github.com/KaustuvMukherjee/kafka-redis-express-server#readme",
   "dependencies": {
     "line-reader": "^0.4.0",
+    "node-rdkafka": "^2.5.1",
     "npm-run-series": "^1.0.1",
     "randomstring": "^1.1.5",
+    "redis": "^2.8.0",
+    "util": "^0.11.1",
     "uuid": "^3.3.2",
     "websocket": "^1.0.28",
     "winston": "^3.1.0"

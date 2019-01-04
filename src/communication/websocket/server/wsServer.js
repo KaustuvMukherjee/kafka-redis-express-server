@@ -7,6 +7,7 @@ const wsServer = require('websocket').server
 const http = require('http')
 const uuidv4 = require('uuid/v4')
 const serverConnectionManager = require('./serverConnectionManager')
+const redis = require('../../../storage/redis/redisClient')
 
 let wsSvr = null
 
@@ -62,6 +63,9 @@ class WSServer {
     }
 }
 
+
+// ALL TEMP CALLS
+redis.connectRedis()
 WSServer.createWSServer()
 
 module.exports = WSServer

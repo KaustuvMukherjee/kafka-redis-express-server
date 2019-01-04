@@ -9,7 +9,7 @@ function sendNumber() {
     if (conn.connected) {
         var number = Math.round(Math.random() * 0xFFFFFF);
         conn.sendUTF(number.toString());
-        setTimeout(sendNumber, 1000);
+        setTimeout(sendNumber, 5000);
     }
 }
 class BaseClient {

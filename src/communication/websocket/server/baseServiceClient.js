@@ -1,23 +1,23 @@
 /*
- * Class - BaseServiceClinet
+ * Class - BaseServiceClient
  */
 'use strict'
 const logger = require('../../../logger/winston')
 
-class BaseServiceClinet {
+class BaseServiceClient {
     constructor(connection) {
         this.connection = connection
-        connection.on('message', (message) => {
+        this.connection.on('message', (message) => {
             if (message.type === 'utf8') {
-                logger.info('Received Message: ' + message.utf8Data)
-                connection.sendUTF(message.utf8Data)
+                logger.info('Received Message: ' + message.utf8Data + ' from client id: ' + this.connection.id)
+                this.connection.sendUTF(message.utf8Data)
             }
             else if (message.type === 'binary') {
                 logger.info('Received Binary Message of ' + message.binaryData.length + ' bytes')
-                connection.sendBytes(message.binaryData);
+                this.connection.sendBytes(message.binaryData);
             }
         })
     }
 }
 
-module.exports = BaseServiceClinet
+module.exports = BaseServiceClient
