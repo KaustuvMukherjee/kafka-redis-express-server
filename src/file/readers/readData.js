@@ -15,10 +15,10 @@ class ReadData {
     }
 }
 
-let count = 0
-ReadData.read((line) => {
-    count += 1
-    logger.info(`${count} - ${line}`)
-})
+// let count = 0
+// ReadData.read((line) => {
+//     count += 1
+//     logger.info(`${count} - ${line}`)
+// })
 
 module.exports = ReadData

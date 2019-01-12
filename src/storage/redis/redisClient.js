@@ -8,7 +8,7 @@ let redis = null
 
 class RedisClient {
 
-    static connectRedis() {
+    static connect() {
 
         redis = Redis.createClient(connectionString)
 
@@ -38,7 +38,7 @@ class RedisClient {
         return {status: "SUCCESS"}
     }
 
-    static disconnectRedis() {
+    static disconnect() {
         redis.quit()
         return {status: "SUCCESS"}
     }
@@ -51,8 +51,8 @@ class RedisClient {
         switch(keyType){
             case constants.HASH_CLIENT_UUID.TIMESTAMP:
                 keyVal = `${constants.HASH_CLIENT_UUID.TIMESTAMP}:${key}`
-            case constants.HASH_CLIENT_UUID.SUBSCRIPTIONTYPE:
-                keyVal = HASH_CLIENT_UUID.SUBSCRIPTIONTYPE
+            case constants.HASH_CLIENT_UUID.SUBSCRIPTION_TYPE:
+                keyVal = HASH_CLIENT_UUID.SUBSCRIPTION_TYPE
         }
         try {
             const setAsync = promisify(redis.hset).bind(redis)

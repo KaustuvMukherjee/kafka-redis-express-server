@@ -5,10 +5,11 @@ const readData = require('../../../file/readers/readData')
 
 class ProducerClient {
     static start() {
-        producer.createKafka((event, err) => {
+        producer.create((event, err) => {
             if(event === 'ready') {
+                logger.info("Producer - EVENT:ready")
                 readData.read((line) => {
-                    producer.write(line)
+                    producer.write(constants.TOPIC.MASTER, line)
                 })
             } else if(event === 'disconnected') {
                 logger.info("Producer - EVENT:disconnected")

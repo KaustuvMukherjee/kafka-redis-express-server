@@ -5,10 +5,10 @@ const Kafka = require('node-rdkafka')
 let producer = null
 let callback = null
 class Producer {
-    static createKafka(callback) {
+    static create(callback) {
         callback = callback
         producer = new Kafka.Producer({
-            'metadata.broker.list': 'localhost:9092'
+            'metadata.broker.list': constants.BROKER.HOST
         })
         producer.connect()
 
@@ -26,11 +26,11 @@ class Producer {
         })
     }
 
-    static write(message) {
+    static write(topic, message) {
         try {
             producer.produce(
                 // Topic to send the message to
-                'realtime-client-server-topic',
+                topic,
                 // optionally we can manually specify a partition for the message
                 // this defaults to -1 - which will use librdkafka's default partitioner (consistent random for keyed messages, random for unkeyed messages)
                 null,
@@ -49,7 +49,8 @@ class Producer {
         }
     }
 
-    static disconnectKafka() {
+    static disconnect() {
+        logger.info("Producer - DISCONNECT")
         producer.disconnect()
     }
 }

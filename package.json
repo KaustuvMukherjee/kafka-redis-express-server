@@ -12,6 +12,7 @@
     "client-start": "node $NODE_DEBUG_OPTION src/communication/websocket/client/wsClient",
     "redis-start": "node $NODE_DEBUG_OPTION src/storage/redis/redisClient",
     "producerClient-start": "node $NODE_DEBUG_OPTION src/streaming/kafka/producer/producerClient",
+    "consumerClient-start": "node $NODE_DEBUG_OPTION src/streaming/kafka/consumer/consumerClient",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
