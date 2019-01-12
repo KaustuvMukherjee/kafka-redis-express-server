@@ -2,21 +2,22 @@ const constants = require('../../../constant/constants')
 const logger = require('../../../logger/winston')
 const consumer = require('./consumer')
 
+let callback = null
 class ConsumerClient {
-    static start() {
-        consumer.create((event, err) => {
-            if(event === 'ready') {
-                consumer.subscribe(constants.TOPIC.MASTER)
-                consumer.consume()
-            } else if(event === 'data') {
-                logger.info("Consumer - EVENT:data")
-            } else if(event === 'event.error') {
-                logger.error(`Consumer - EVENT:error:${err}`)
+    static start(callback) {
+        callback = callback
+
+        consumer.create((event, info) => {
+            switch(event) {
+                case constants.EVENT.KAFKA_CONSUMER_READY:
+                    consumer.subscribe(constants.TOPIC.MASTER)
+                    consumer.consume()
+                    break
+                default:
             }
+            callback(event, info)
         })
     }
 }
-
-ConsumerClient.start()
 
 module.exports = ConsumerClient

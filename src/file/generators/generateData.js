@@ -13,7 +13,7 @@ const prefixLookUp = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'
 const fields_with_random_alphabets = true
 const size_of_each_field = 3
 const no_of_fields_per_record = 10
-const no_of_records = 100
+const no_of_records = 10000
 const dataPath = `${fs.realpathSync('src')}/file/data`
 
 class GenerateData {

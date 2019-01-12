@@ -5,35 +5,37 @@ const logger = require('../../logger/winston')
 
 let connectionString = 'redis://localhost:6379'
 let redis = null
+let callback = null
 
 class RedisClient {
 
-    static connect() {
+    static connect(callback) {
+        callback = callback
 
         redis = Redis.createClient(connectionString)
 
         redis.on("ready", function () {
-            logger.info(`Redis Client - EVENT:ready`)
+            callback(constants.EVENT.REDIS_READY, null)
         })
 
         redis.on("connect", function () {
-            logger.info(`Redis Client - EVENT:connect`)
+            callback(constants.EVENT.REDIS_CONNECT, null)
         })
 
         redis.on("reconnecting", function () {
-            logger.info(`Redis Client - EVENT:reconnecting`)
+            callback(constants.EVENT.REDIS_RECONNECTING, null)
         })
 
         redis.on("error", function (err) {
-            logger.error(`Redis Client - EVENT:error:${err}`)
+            callback(constants.EVENT.REDIS_ERROR, err)
         })
 
         redis.on("end", function () {
-            logger.info(`Redis Client - EVENT:end`)
+            callback(constants.EVENT.REDIS_END, null)
         })
 
         redis.on("warning", function (err) {
-            logger.info(`Redis Client - EVENT:warning:${err}`)
+            callback(constants.EVENT.REDIS_WARNING, null)
         })
         return {status: "SUCCESS"}
     }
@@ -89,57 +91,6 @@ class RedisClient {
             return {status: "FAILED"}
         }
     }
-
-    // for reference only
-    // static async getConfig(hashKey, key) {
-    //     try {
-    //         const getAsync = promisify(redisClient.hget).bind(redisClient)
-    //         let result = await getAsync(hashKey, key)
-    //         return result
-    //     } catch (e) {
-    //         return {"status": "FAILED"}
-    //     }
-    // }
-    //
-    // static async getConfigAll(hashKey) {
-    //     try {
-    //         const getAllAsync = promisify(redisClient.hgetall).bind(redisClient)
-    //         let result = await getAllAsync(hashKey)
-    //         return result
-    //     } catch (e) {
-    //         return {"status": "FAILED"}
-    //     }
-    // }
-    //
-    // static async setConfig(hashKey, key, val) {
-    //     try {
-    //         const setAsync = promisify(redisClient.hset).bind(redisClient)
-    //         await setAsync(hashKey, key, val)
-    //         return {"status": "SUCCESS"}
-    //     } catch (e) {
-    //         return {"status": "FAILED"}
-    //     }
-    // }
-    //
-    // static async deleteConfig(hashKey, key) {
-    //     try {
-    //         const delAsync = promisify(redisClient.hdel).bind(redisClient)
-    //         await delAsync(hashKey, key)
-    //         return {"status": "SUCCESS"}
-    //     } catch (e) {
-    //         return {"status": "FAILED"}
-    //     }
-    // }
-    //
-    // static async deleteConfigAll(hashKey) {
-    //     try {
-    //         const delAllAsync = promisify(redisClient.del).bind(redisClient)
-    //         await delAllAsync(hashKey)
-    //         return {"status": "SUCCESS"}
-    //     } catch (e) {
-    //         return {"status": "FAILED"}
-    //     }
-    // }
 }
 
 module.exports = RedisClient

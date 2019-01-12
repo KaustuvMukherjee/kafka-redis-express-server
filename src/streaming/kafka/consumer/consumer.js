@@ -7,39 +7,58 @@ let callback = null
 class Consumer {
     static create(callback) {
         callback = callback
+
         consumer = new Kafka.KafkaConsumer({
             'group.id': constants.CONSUMER.GROUP_ID,
             'metadata.broker.list': constants.BROKER.HOST,
         }, {})
         consumer.connect()
 
-        consumer.on('ready', function() {
-            logger.info("Consumer - EVENT:ready")
-            callback('ready', null)
-        })
         consumer.on('data', function(data) {
-            logger.info("Consumer - EVENT:data")
-            logger.info(`DATA: ${data.value.toString()}`)
-            callback('data', data.value.toString())
+            callback(constants.EVENT.KAFKA_CONSUMER_DATA, data.value.toString())
         })
+
+        consumer.on('disconnected', function() {
+            callback(constants.EVENT.KAFKA_CONSUMER_DISCONNECTED, null)
+        })
+
+        consumer.on('ready', function() {
+            callback(constants.EVENT.KAFKA_CONSUMER_READY, null)
+        })
+
+        consumer.on('event', function() {
+            callback(constants.EVENT.KAFKA_CONSUMER_EVENT, null)
+        })
+
+        consumer.on('event.log', function() {
+            callback(constants.EVENT.KAFKA_CONSUMER_EVENT_LOG, null)
+        })
+
+        consumer.on('event.stats', function() {
+            callback(constants.EVENT.KAFKA_CONSUMER_EVENT_STATS, null)
+        })
+
         consumer.on('event.error', function(err) {
-            logger.error(`Consumer - EVENT:error:${err}`)
-            callback('event.error', err)
+            callback(constants.EVENT.KAFKA_CONSUMER_EVENT_ERROR, err)
+        })
+
+        consumer.on('event.throttle', function() {
+            callback(constants.EVENT.KAFKA_CONSUMER_EVENT_THROTTLE, null)
         })
     }
 
     static subscribe(topic) {
-        logger.info(`Consumer - SUBSCRIBED:${topic}`)
+        logger.debug(`Consumer - SUBSCRIBED:${topic}`)
         consumer.subscribe([topic])
     }
 
     static consume() {
-        logger.info(`Consumer - CONSUME`)
+        logger.debug(`Consumer - CONSUME`)
         consumer.consume()
     }
 
     static disconnect() {
-        logger.info(`Consumer - DISCONNECT`)
+        logger.debug(`Consumer - DISCONNECT`)
         producer.disconnect()
     }
 }

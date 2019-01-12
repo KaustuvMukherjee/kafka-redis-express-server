@@ -14,3 +14,30 @@ exports.TOPIC = {
 exports.CONSUMER = {
     GROUP_ID:'group_master'
 }
+
+// Events (All)
+exports.EVENT = {
+    REDIS_READY: 'event.redis.ready',
+    REDIS_CONNECT: 'event.redis.connect',
+    REDIS_RECONNECTING: 'event.redis.reconnecting',
+    REDIS_ERROR: 'event.redis.error',
+    REDIS_END: 'event.redis.end',
+    REDIS_WARNING: 'event.redis.warning',
+    KAFKA_PRODUCER_DISCONNECTED: 'event.kafka.producer.disconnected',
+    KAFKA_PRODUCER_READY: 'event.kafka.producer.ready',
+    KAFKA_PRODUCER_EVENT: 'event.kafka.producer.event',
+    KAFKA_PRODUCER_EVENT_LOG: 'event.kafka.producer.event.log',
+    KAFKA_PRODUCER_EVENT_STATS: 'event.kafka.producer.event.stats',
+    KAFKA_PRODUCER_EVENT_ERROR: 'event.kafka.producer.event.error',
+    KAFKA_PRODUCER_EVENT_THROTTLE: 'event.kafka.producer.event.throttle',
+    KAFKA_PRODUCER_DELIVERY_REPORT: 'event.kafka.producer.delivery.report',
+    KAFKA_CONSUMER_DATA: 'event.kafka.consumer.data',
+    KAFKA_CONSUMER_DISCONNECTED: 'event.kafka.consumer.disconnected',
+    KAFKA_CONSUMER_READY: 'event.kafka.consumer.ready',
+    KAFKA_CONSUMER_EVENT: 'event.kafka.consumer.event',
+    KAFKA_CONSUMER_EVENT_LOG: 'event.kafka.consumer.event.log',
+    KAFKA_CONSUMER_EVENT_STATS: 'event.kafka.consumer.event.stats',
+    KAFKA_CONSUMER_EVENT_ERROR: 'event.kafka.consumer.event.error',
+    KAFKA_CONSUMER_EVENT_THROTTLE: 'event.kafka.consumer.event.throttle'
+
+}

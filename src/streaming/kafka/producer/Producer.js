@@ -7,26 +7,48 @@ let callback = null
 class Producer {
     static create(callback) {
         callback = callback
+
         producer = new Kafka.Producer({
-            'metadata.broker.list': constants.BROKER.HOST
+            'metadata.broker.list': constants.BROKER.HOST,
+            dr_cb: true,
+            event_cb: true
         })
         producer.connect()
+        producer.setPollInterval(100)
+
+        producer.on('disconnected', function() {
+            callback(constants.EVENT.KAFKA_PRODUCER_DISCONNECTED, null)
+        })
 
         producer.on('ready', function() {
-            logger.info("Producer - EVENT:ready")
-            callback('ready', null)
+            callback(constants.EVENT.KAFKA_PRODUCER_READY, null)
         })
-        producer.on('disconnected', function() {
-            logger.info("Producer - EVENT:disconnected")
-            callback('disconnected', null)
+
+        producer.on('event', function() {
+            callback(constants.EVENT.KAFKA_PRODUCER_EVENT, null)
         })
+        producer.on('event.log', function() {
+            callback(constants.EVENT.KAFKA_PRODUCER_EVENT_LOG, null)
+        })
+
+        producer.on('event.stats', function() {
+            callback(constants.EVENT.KAFKA_PRODUCER_EVENT_STATS, null)
+        })
+
         producer.on('event.error', function(err) {
-            logger.error(`Producer - EVENT:error:${err}`)
-            callback('event.error', err)
+            callback(constants.EVENT.KAFKA_PRODUCER_EVENT_ERROR, err)
+        })
+        producer.on('event.throttle', function() {
+            callback(constants.EVENT.KAFKA_PRODUCER_EVENT_THROTTLE, null)
+        })
+
+        producer.on('delivery-report', function() {
+            callback(constants.EVENT.KAFKA_PRODUCER_DELIVERY_REPORT, null)
         })
     }
 
     static write(topic, message) {
+        logger.debug(`Producer - WRITE: TOPIC - ${topic} MESSAGE - ${message}`)
         try {
             producer.produce(
                 // Topic to send the message to
@@ -50,7 +72,7 @@ class Producer {
     }
 
     static disconnect() {
-        logger.info("Producer - DISCONNECT")
+        logger.debug("Producer - DISCONNECT")
         producer.disconnect()
     }
 }

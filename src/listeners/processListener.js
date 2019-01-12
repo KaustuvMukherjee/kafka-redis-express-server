@@ -2,7 +2,7 @@
  * Class - ProcessListener
  */
 'use strict'
-const winston = require('./winston')
+const winston = require('../logger/winston')
 
 class ProcessListener {
     static listen() {

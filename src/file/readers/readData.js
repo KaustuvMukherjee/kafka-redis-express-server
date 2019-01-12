@@ -10,7 +10,9 @@ const dataFilePath = `${fs.realpathSync('src')}/file/data/records`
 class ReadData {
     static read(callback) {
         lineReader.eachLine(dataFilePath, function(line, last) {
-            callback(line)
+            if(!callback(line)) {
+                return false
+            }
         })
     }
 }

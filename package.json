@@ -4,7 +4,7 @@
   "description": "A PoC on integrating kafka message strean with redis.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node $NODE_DEBUG_OPTION index.js",
     "generate-data": "node $NODE_DEBUG_OPTION src/file/generators/generateData",
     "read-data": "node $NODE_DEBUG_OPTION src/file/readers/readData",
     "generate-read-data": "npm-run-series generate-data read-data",
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/KaustuvMukherjee/kafka-redis-express-server#readme",
   "dependencies": {
+    "chalk": "^2.4.2",
     "line-reader": "^0.4.0",
     "node-rdkafka": "^2.5.1",
     "npm-run-series": "^1.0.1",

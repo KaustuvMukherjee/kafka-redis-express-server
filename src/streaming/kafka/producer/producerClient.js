@@ -3,23 +3,32 @@ const logger = require('../../../logger/winston')
 const producer = require('./producer')
 const readData = require('../../../file/readers/readData')
 
+let callback = null
+let connected = false
 class ProducerClient {
-    static start() {
-        producer.create((event, err) => {
-            if(event === 'ready') {
-                logger.info("Producer - EVENT:ready")
-                readData.read((line) => {
-                    producer.write(constants.TOPIC.MASTER, line)
-                })
-            } else if(event === 'disconnected') {
-                logger.info("Producer - EVENT:disconnected")
-            } else if(event === 'event.error') {
-                logger.error(`Producer - EVENT:error:${err}`)
+    static start(callback) {
+        callback = callback
+
+        producer.create((event, info) => {
+            switch(event) {
+                case constants.EVENT.KAFKA_PRODUCER_DISCONNECTED:
+                    connected = false
+                    break
+                case constants.EVENT.KAFKA_PRODUCER_READY:
+                    connected = true
+                    readData.read((line) => {
+                        producer.write(constants.TOPIC.MASTER, line)
+                        return connected
+                    })
+                    break
+                case constants.EVENT.KAFKA_PRODUCER_EVENT_ERROR:
+                    connected = false
+                    break
+                default:
             }
+            callback(event, info)
         })
     }
 }
-
-ProducerClient.start()
 
 module.exports = ProducerClient

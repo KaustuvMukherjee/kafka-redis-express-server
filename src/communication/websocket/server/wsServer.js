@@ -65,7 +65,7 @@ class WSServer {
 
 
 // ALL TEMP CALLS
-redis.connect()
+// redis.connect()
 WSServer.createWSServer()
 //
 
