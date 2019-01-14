@@ -1,5 +1,7 @@
+
+const util = require('util')
 const constants = require('../../../constant/constants')
-const logger = require('../../../logger/winston')
+const logger = require('../../../logger/logger')
 const Kafka = require('node-rdkafka')
 
 let consumer = null
@@ -11,6 +13,8 @@ class Consumer {
         consumer = new Kafka.KafkaConsumer({
             'group.id': constants.CONSUMER.GROUP_ID,
             'metadata.broker.list': constants.BROKER.HOST,
+            'auto.offset.reset': constants.CONSUMER.AUTO_RESET_OFFSET,
+            'enable.auto.commit': true
         }, {})
         consumer.connect()
 
@@ -19,31 +23,34 @@ class Consumer {
         })
 
         consumer.on('disconnected', function() {
-            callback(constants.EVENT.KAFKA_CONSUMER_DISCONNECTED, null)
+            callback(constants.EVENT.KAFKA_CONSUMER_DISCONNECTED)
         })
 
         consumer.on('ready', function() {
-            callback(constants.EVENT.KAFKA_CONSUMER_READY, null)
+            global.readyToConsume = true
+            Consumer.subscribe(constants.TOPIC.MASTER)
+            Consumer.consume()
+            callback(constants.EVENT.KAFKA_CONSUMER_READY)
         })
 
         consumer.on('event', function() {
-            callback(constants.EVENT.KAFKA_CONSUMER_EVENT, null)
+            callback(constants.EVENT.KAFKA_CONSUMER_EVENT)
         })
 
         consumer.on('event.log', function() {
-            callback(constants.EVENT.KAFKA_CONSUMER_EVENT_LOG, null)
+            callback(constants.EVENT.KAFKA_CONSUMER_EVENT_LOG)
         })
 
         consumer.on('event.stats', function() {
-            callback(constants.EVENT.KAFKA_CONSUMER_EVENT_STATS, null)
+            callback(constants.EVENT.KAFKA_CONSUMER_EVENT_STATS)
         })
 
         consumer.on('event.error', function(err) {
-            callback(constants.EVENT.KAFKA_CONSUMER_EVENT_ERROR, err)
+            callback(constants.EVENT.KAFKA_CONSUMER_EVENT_ERROR, null, err)
         })
 
         consumer.on('event.throttle', function() {
-            callback(constants.EVENT.KAFKA_CONSUMER_EVENT_THROTTLE, null)
+            callback(constants.EVENT.KAFKA_CONSUMER_EVENT_THROTTLE)
         })
     }
 
@@ -54,7 +61,22 @@ class Consumer {
 
     static consume() {
         logger.debug(`Consumer - CONSUME`)
-        consumer.consume()
+
+        setInterval(function() {
+            if(global.readyToConsume === true) {
+                consumer.consume(1, (err, message) => {
+                    if (message.length != 0) {
+                        // global.readyToConsume = false
+                        logger.info(`CONSUME CALLBACK: ${err}: ${message[0].value}`)
+                    } else {
+                        logger.info(`CONSUME CALLBACK: ${err}`)
+                    }
+
+                })
+            } else {
+                logger.info('Consumer is not ready to consume.')
+            }
+        }, 1000);
     }
 
     static disconnect() {

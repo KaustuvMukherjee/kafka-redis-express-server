@@ -2,7 +2,7 @@
  * Class - WSServer
  */
 'use strict'
-const logger = require('../../../logger/winston')
+const logger = require('../../../logger/logger')
 const wsServer = require('websocket').server
 const http = require('http')
 const uuidv4 = require('uuid/v4')

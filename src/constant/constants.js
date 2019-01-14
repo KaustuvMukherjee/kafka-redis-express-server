@@ -1,3 +1,11 @@
+// Data generator
+exports.DATA_GENERATOR = {
+    RANDOM_ALPHABETS: true,
+    FIELD_SIZE: 3,
+    FIELDS_PER_RECORD: 10,
+    NO_OF_RECORDS: 100
+}
+
 // Redis
 exports.HASH_CLIENT_UUID = {
     TIMESTAMP: 'Timestamp',
@@ -12,7 +20,8 @@ exports.TOPIC = {
     MASTER:'topic_master_data'
 }
 exports.CONSUMER = {
-    GROUP_ID:'group_master'
+    GROUP_ID:'group_master',
+    AUTO_RESET_OFFSET: 'earliest'
 }
 
 // Events (All)

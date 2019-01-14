@@ -2,7 +2,7 @@
  * Class - BaseClient
  */
 'use strict'
-const logger = require('../../../logger/winston')
+const logger = require('../../../logger/logger')
 
 let conn = null
 function sendNumber() {

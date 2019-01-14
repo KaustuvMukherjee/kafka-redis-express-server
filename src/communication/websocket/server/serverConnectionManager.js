@@ -3,7 +3,7 @@
  */
 'use strict'
 const util = require('util')
-const logger = require('../../../logger/winston')
+const logger = require('../../../logger/logger')
 const baseServiceClient = require('./baseServiceClient')
 const redis = require('../../../storage/redis/redisClient')
 

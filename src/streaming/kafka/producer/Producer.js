@@ -1,5 +1,5 @@
 const constants = require('../../../constant/constants')
-const logger = require('../../../logger/winston')
+const logger = require('../../../logger/logger')
 const Kafka = require('node-rdkafka')
 
 let producer = null
@@ -17,33 +17,33 @@ class Producer {
         producer.setPollInterval(100)
 
         producer.on('disconnected', function() {
-            callback(constants.EVENT.KAFKA_PRODUCER_DISCONNECTED, null)
+            callback(constants.EVENT.KAFKA_PRODUCER_DISCONNECTED)
         })
 
         producer.on('ready', function() {
-            callback(constants.EVENT.KAFKA_PRODUCER_READY, null)
+            callback(constants.EVENT.KAFKA_PRODUCER_READY)
         })
 
         producer.on('event', function() {
-            callback(constants.EVENT.KAFKA_PRODUCER_EVENT, null)
+            callback(constants.EVENT.KAFKA_PRODUCER_EVENT)
         })
         producer.on('event.log', function() {
-            callback(constants.EVENT.KAFKA_PRODUCER_EVENT_LOG, null)
+            callback(constants.EVENT.KAFKA_PRODUCER_EVENT_LOG)
         })
 
         producer.on('event.stats', function() {
-            callback(constants.EVENT.KAFKA_PRODUCER_EVENT_STATS, null)
+            callback(constants.EVENT.KAFKA_PRODUCER_EVENT_STATS)
         })
 
         producer.on('event.error', function(err) {
-            callback(constants.EVENT.KAFKA_PRODUCER_EVENT_ERROR, err)
+            callback(constants.EVENT.KAFKA_PRODUCER_EVENT_ERROR, null, err)
         })
         producer.on('event.throttle', function() {
-            callback(constants.EVENT.KAFKA_PRODUCER_EVENT_THROTTLE, null)
+            callback(constants.EVENT.KAFKA_PRODUCER_EVENT_THROTTLE)
         })
 
-        producer.on('delivery-report', function() {
-            callback(constants.EVENT.KAFKA_PRODUCER_DELIVERY_REPORT, null)
+        producer.on('delivery-report', function(err, report) {
+            callback(constants.EVENT.KAFKA_PRODUCER_DELIVERY_REPORT, report, err)
         })
     }
 

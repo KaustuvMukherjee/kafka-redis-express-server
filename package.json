@@ -11,8 +11,8 @@
     "server-start": "node $NODE_DEBUG_OPTION src/communication/websocket/server/wsServer",
     "client-start": "node $NODE_DEBUG_OPTION src/communication/websocket/client/wsClient",
     "redis-start": "node $NODE_DEBUG_OPTION src/storage/redis/redisClient",
-    "producerClient-start": "node $NODE_DEBUG_OPTION src/streaming/kafka/producer/producerClient",
-    "consumerClient-start": "node $NODE_DEBUG_OPTION src/streaming/kafka/consumer/consumerClient",
+    "producer-start": "node $NODE_DEBUG_OPTION index.js --mode=producer",
+    "consumer-start": "node $NODE_DEBUG_OPTION index.js --mode=consumer",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,6 +27,7 @@
   "homepage": "https://github.com/KaustuvMukherjee/kafka-redis-express-server#readme",
   "dependencies": {
     "chalk": "^2.4.2",
+    "install": "^0.12.2",
     "line-reader": "^0.4.0",
     "node-rdkafka": "^2.5.1",
     "npm-run-series": "^1.0.1",
@@ -35,6 +36,7 @@
     "util": "^0.11.1",
     "uuid": "^3.3.2",
     "websocket": "^1.0.28",
-    "winston": "^3.1.0"
+    "winston": "^3.1.0",
+    "yargs": "^12.0.5"
   }
 }

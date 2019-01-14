@@ -2,32 +2,32 @@
  * Class - ProcessListener
  */
 'use strict'
-const winston = require('../logger/winston')
+const logger = require('../logger/logger')
 
 class ProcessListener {
     static listen() {
         process.on('exit', (code) => {
-            winston.info(`EXIT CODE: ${code}`)
+            logger.info(`EXIT CODE: ${code}`)
         })
         //
         process.on('message', (msg) => {
-            winston.info(`MESSAGE: ${msg}`)
+            logger.info(`MESSAGE: ${msg}`)
         })
         //
         process.on('rejectionHandled', (reason, promise) => {
-            winston.info(`REJECTION HANDLED at: ${promise} reason: ${reason}`)
+            logger.info(`REJECTION HANDLED at: ${promise} reason: ${reason}`)
         })
         //
         process.on('uncaughtException', (err) => {
-            winston.info(`UNCAUGHT EXCEPTION: ${err}`)
+            logger.info(`UNCAUGHT EXCEPTION: ${err}`)
         })
         //
         process.on('unhandledRejection', (reason, promise) => {
-            winston.info(`UNHANDLED REJECTION at: ${promise} reason: ${reason}`)
+            logger.info(`UNHANDLED REJECTION at: ${promise} reason: ${reason}`)
         })
         //
         process.on('warning', (warning) => {
-            winston.info(`WARNING: ${warning}`)
+            logger.info(`WARNING: ${warning}`)
         })
     }
 }

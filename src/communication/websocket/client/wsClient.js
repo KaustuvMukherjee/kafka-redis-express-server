@@ -2,7 +2,7 @@
  * Class - WSClient
  */
 'use strict'
-const logger = require('../../../logger/winston')
+const logger = require('../../../logger/logger')
 const wsClient = require('websocket').client
 const clientConnectionManager = require('./clientConnectionManager')
 

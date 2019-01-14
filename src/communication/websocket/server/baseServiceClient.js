@@ -2,7 +2,7 @@
  * Class - BaseServiceClient
  */
 'use strict'
-const logger = require('../../../logger/winston')
+const logger = require('../../../logger/logger')
 
 class BaseServiceClient {
     constructor(connection) {

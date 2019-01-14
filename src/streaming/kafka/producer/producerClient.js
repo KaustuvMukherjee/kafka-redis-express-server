@@ -1,5 +1,5 @@
 const constants = require('../../../constant/constants')
-const logger = require('../../../logger/winston')
+const logger = require('../../../logger/logger')
 const producer = require('./producer')
 const readData = require('../../../file/readers/readData')
 
@@ -9,7 +9,7 @@ class ProducerClient {
     static start(callback) {
         callback = callback
 
-        producer.create((event, info) => {
+        producer.create((event, info, error) => {
             switch(event) {
                 case constants.EVENT.KAFKA_PRODUCER_DISCONNECTED:
                     connected = false
@@ -26,7 +26,7 @@ class ProducerClient {
                     break
                 default:
             }
-            callback(event, info)
+            callback(event, info, error)
         })
     }
 }

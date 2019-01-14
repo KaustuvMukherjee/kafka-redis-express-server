@@ -4,7 +4,7 @@
 'use strict'
 const fs = require('fs')
 const lineReader = require('line-reader')
-const logger = require('../../logger/winston')
+const logger = require('../../logger/logger')
 const dataFilePath = `${fs.realpathSync('src')}/file/data/records`
 
 class ReadData {

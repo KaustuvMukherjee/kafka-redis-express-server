@@ -2,7 +2,7 @@
  * Class - ClientConnectionManager
  */
 'use strict'
-const logger = require('../../../logger/winston')
+const logger = require('../../../logger/logger')
 const baseClient = require('./baseClient')
 
 let client = null

@@ -1,7 +1,7 @@
 const constants = require('../../constant/constants')
 const Redis = require('redis')
 const {promisify} = require('util')
-const logger = require('../../logger/winston')
+const logger = require('../../logger/logger')
 
 let connectionString = 'redis://localhost:6379'
 let redis = null
